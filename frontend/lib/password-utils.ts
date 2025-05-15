@@ -1,14 +1,18 @@
 import bcrypt from "bcryptjs";
 
-export function saltAndHashPassword(password: string) {
-  const saltsRound = 10;
-  const salt = bcrypt.genSaltSync(saltsRound);
+// salt + hash password
+export function saltAndHashPassword(password: string): string {
+  const saltRounds = 10;
+  const salt = bcrypt.genSaltSync(saltRounds);
   const hash = bcrypt.hashSync(password, salt);
 
   return hash;
 }
 
-//DB에 저장된 비밀번호와 사용자가 입력한 비밀번호를 비교
-export function comparePassword(password: string, hash: string) {
-  return bcrypt.compareSync(password, hash);
+// DB에 있는 비밀번호 vs 입력받은 비밀번호
+export function comparePassword(
+  password: string,
+  hashedPassword: string
+): boolean {
+  return bcrypt.compareSync(password, hashedPassword);
 }

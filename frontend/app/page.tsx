@@ -1,5 +1,12 @@
-import Image from "next/image";
+import { auth } from "@/auth";
 
-export default function Home() {
-  return <div>인프런</div>;
+export default async function Home() {
+  const session = await auth();
+  console.log("Session data:", JSON.stringify(session, null, 2));
+  return (
+    <div>
+      <p>현재로그인한 유저 보여주기</p>
+      <p>{session?.user?.email}</p>
+    </div>
+  );
 }
